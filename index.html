@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>교실 탈출 프로젝트 — 여름 방학 이야기</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <span class="badge">여름방학 특집</span>
+        <span class="badge sub">교탈프</span>
+        <h1>교실 탈출 프로젝트</h1>
+        <div style="font-family:'Jua','Noto Serif KR',serif; font-size:22px; color:var(--sea-deep); margin-bottom:6px; letter-spacing:0.04em;">— 여름 방학 이야기 —</div>
+        <div class="subtext">8개의 문제를 풀고 신나는 여름방학을 시작하세요</div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="secondary" id="qrBtn">📱 QR 코드</button>
+        <button class="secondary" id="resetTop">🔄 처음으로</button>
+      </div>
+    </div>
+
+    <!-- ── QR 모달 ── -->
+    <div class="qr-overlay" id="qrOverlay">
+      <div class="qr-card">
+        <div class="qr-title">📱 접속 QR 코드</div>
+        <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fclassroomescapeproject5.netlify.app%2F" alt="QR 코드" />
+        <div class="qr-url">classroomescapeproject5.netlify.app</div>
+        <button class="secondary" id="qrCloseBtn" style="margin-top:18px; color:var(--ink); border-color:var(--border);">닫기</button>
+      </div>
+    </div>
+
+    <!-- ── 시작 패널 ── -->
+    <section id="startPanel" class="panel">
+      <div class="card hero">
+        <div>
+          <div class="case-num">여름방학 안내문 SUMMER #005</div>
+          <h2 style="font-family:'Jua','Noto Serif KR',serif; font-size:26px; margin:14px 0 12px; letter-spacing:0.02em; font-weight:400;">교실에 남겨진 8장의 쪽지.<br>모두 풀어야 진짜 방학이 시작된다!</h2>
+          <p style="font-family:'Noto Serif KR',serif; color:var(--ink); line-height:2; font-size:15px; margin-bottom:16px; border-left:3px solid var(--sun); padding-left:14px; background:var(--paper2); padding:12px 14px; border-radius:10px;">여름방학을 앞둔 마지막 날,<br>교실 게시판에 알쏭달쏭한 쪽지들이 붙어 있었다.<br>모든 문제를 풀어야만 방학이 시작된다는 소문이...</p>
+          <p style="color:var(--muted); line-height:1.9; font-size:13px;">문제를 읽고 정답을 입력하면<br>다음 문제로 이동합니다. 제한 시도를 넘기면<br>처음부터 다시 시작됩니다.</p>
+          <div style="background:var(--paper2); border:1px solid rgba(18,165,209,0.18); border-left:3px solid var(--coral); border-radius:10px; padding:14px 16px; margin:16px 0; line-height:1.9; color:var(--muted); font-size:13px;">
+            🏖️ 정답을 맞히면 자동으로 다음 문제로 이동합니다.<br>
+            ✍️ 띄어쓰기 없이 정답을 입력하세요.<br>
+            ❤️ 하트 15개가 모두 사라지면 1번부터 다시 시작합니다.
+          </div>
+          <button class="primary" id="startBtn" style="padding:14px 32px; font-size:15px;">🏖️ 방학 시작</button>
+        </div>
+        <div class="card dark" style="box-shadow:none;">
+          <div>
+            <div style="color:rgba(255,255,255,0.65); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;">오늘의 미션</div>
+            <div style="font-family:'Jua','Noto Serif KR',serif; font-size:24px; font-weight:400; margin-top:10px; line-height:1.4; letter-spacing:0.02em;">방학을<br>시작하라</div>
+          </div>
+          <div class="grid2" style="margin-top:24px;">
+            <div class="mini">
+              <div style="color:rgba(255,255,255,0.65); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">문제 수</div>
+              <div style="font-size:28px; font-weight:700; margin-top:8px; font-family:'Jua',sans-serif; color:#fff;">8</div>
+            </div>
+            <div class="mini">
+              <div style="color:rgba(255,255,255,0.65); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">제한 횟수</div>
+              <div style="font-size:28px; font-weight:700; margin-top:8px; font-family:'Jua',sans-serif; color:#fff;">15</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 게임 패널 ── -->
+    <section id="gamePanel" class="panel">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="status">
+          <div>
+            <div style="color:var(--muted); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px;">진행 상황</div>
+            <div id="progress" style="font-weight:700; font-size:18px; font-family:'Jua','Noto Serif KR',serif;">문제 1 / 8</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div class="pill"><span id="lifeText">정답 도전 횟수 15 / 15</span></div>
+            <div id="hearts" class="hearts"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="problem-head">
+          <div>
+            <div id="problemTitle" style="font-size:26px; font-weight:700; font-family:'Jua','Noto Serif KR',serif;">1번 문제</div>
+            <div class="instruction">정답 칸에 정답을 입력하세요.</div>
+            <div id="problemNote" class="note" style="display:none;"></div>
+          </div>
+          <div class="pill" id="problemNo" style="font-family:'Noto Serif KR',serif; font-size:12px; letter-spacing:0.08em;">문제 번호 1</div>
+        </div>
+
+        <div class="imgbox" id="problemMedia"></div>
+
+        <div class="controls">
+          <input id="answerInput" type="text" placeholder="정답을 입력하세요" autocomplete="off" />
+          <button class="primary" id="submitBtn">☀️ 정답 확인</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── 엔딩 오버레이 (해변 카피바라 공개) ── -->
+  <div class="ending-overlay" id="endingOverlay">
+    <div class="ending-scene">
+      <!-- 1단계: 실루엣 -->
+      <div class="ending-sil-wrap" id="endingSilhouette">
+        <svg class="ending-sil-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="endSilGrad" cx="50%" cy="30%" r="60%">
+              <stop offset="0%"  stop-color="#4d7378"/>
+              <stop offset="100%" stop-color="#163b3f"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="50" cy="120" rx="42" ry="34" fill="url(#endSilGrad)"/>
+          <circle cx="50" cy="70" r="26" fill="url(#endSilGrad)"/>
+          <ellipse cx="30" cy="52" rx="8" ry="10" fill="url(#endSilGrad)"/>
+          <ellipse cx="70" cy="52" rx="8" ry="10" fill="url(#endSilGrad)"/>
+          <text x="50" y="80" text-anchor="middle" font-size="26" font-family="serif"
+                fill="rgba(255,183,3,0.85)" font-weight="700">?</text>
+        </svg>
+        <div class="ending-sil-label">누군가 다가온다...</div>
+      </div>
+      <!-- 2단계: 카피바라 공개 -->
+      <div class="ending-capybara-wrap" id="endingCapybara">
+        <img src="capybara2.jpg" alt="여름 방학 메이트 카피바라" class="capybara-img" />
+        <div class="capybara-name-badge">🏖️ 여름 방학 메이트 : 카피바라</div>
+      </div>
+    </div>
+    <div class="ending-dialogue-box" id="endingDialogueBox">
+      <div class="ending-ep-badge" id="endingBadge">VACATION START</div>
+      <div class="ending-text" id="endingText"></div>
+      <div class="ending-cursor" id="endingCursor">|</div>
+      <div class="ending-footer">
+        <div class="ending-dots" id="endingDots"></div>
+        <button class="intro-btn small" id="endingNextBtn" style="display:none;">다음 ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 성공 오버레이 ── -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <canvas id="fireworks"></canvas>
+      <div class="success-inner">
+        <div class="icon">🏖️</div>
+        <h2>여름방학 탈출 완료!</h2>
+        <p style="font-family:'Noto Serif KR',serif;">8개의 문제를 모두 해결했다.<br>이제 진짜 신나는 여름방학이 시작된다!</p>
+        <div class="photo-section">
+          <div class="photo-divider">🌊 카피바라의 여름 방학 스냅</div>
+          <img src="capybara1.jpg" alt="온천을 즐기는 카피바라" class="bonus-photo" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 인트로 1: 타이틀 화면 ── -->
+  <div class="intro-overlay active" id="intro1Panel">
+    <div class="intro1-content">
+      <div class="intro1-sun"></div>
+      <div class="intro1-cloud cloud1"></div>
+      <div class="intro1-cloud cloud2"></div>
+      <div class="intro1-gull gull1">〜</div>
+      <div class="intro1-gull gull2">〜</div>
+      <div class="intro1-gull gull3">〜</div>
+      <div class="intro1-label">CLASSROOM ESCAPE PROJECT</div>
+      <h1 class="intro1-title">교실 탈출 프로젝트</h1>
+      <div class="intro1-sub">— 여름 방학 이야기 —</div>
+      <button class="intro-btn" id="intro1NextBtn">다음 ▶</button>
+      <button class="intro-btn small" id="intro1QrBtn" style="margin-top:16px; opacity:0.75;">📱 QR 코드</button>
+      <div class="intro1-waves">
+        <div class="wave-layer w1"></div>
+        <div class="wave-layer w2"></div>
+        <div class="wave-layer w3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 인트로 2: 해변 장면 + 대화 ── -->
+  <div class="intro-overlay" id="intro2Panel">
+    <div class="beach-scene">
+      <div class="beach-sun"></div>
+      <div class="beach-sea">
+        <div class="wave-layer w1"></div>
+        <div class="wave-layer w2"></div>
+        <div class="wave-layer w3"></div>
+      </div>
+      <div class="signboard">
+        <span class="sign-line1">교실 탈출 프로젝트</span>
+        <span class="sign-divider">— 여름 방학 이야기 —</span>
+        <span class="sign-credit">created by. 민프피</span>
+      </div>
+      <div class="beach-umbrella umb1">⛱️</div>
+      <div class="beach-umbrella umb2">⛱️</div>
+      <div class="beach-item item-star">⭐</div>
+      <div class="beach-item item-shell">🐚</div>
+      <div class="beach-item item-tube">🍩</div>
+    </div>
+
+    <!-- 미스터리 실루엣 (2번째 대사에서 등장) -->
+    <div class="silhouette-wrap" id="silhouetteWrap">
+      <svg class="silhouette-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="silGrad" cx="50%" cy="30%" r="60%">
+            <stop offset="0%"  stop-color="#4d7378"/>
+            <stop offset="100%" stop-color="#163b3f"/>
+          </radialGradient>
+        </defs>
+        <!-- 몸통 -->
+        <ellipse cx="50" cy="120" rx="42" ry="34" fill="url(#silGrad)"/>
+        <!-- 머리 -->
+        <circle cx="50" cy="70" r="26" fill="url(#silGrad)"/>
+        <!-- 귀 -->
+        <ellipse cx="30" cy="52" rx="8" ry="10" fill="url(#silGrad)"/>
+        <ellipse cx="70" cy="52" rx="8" ry="10" fill="url(#silGrad)"/>
+        <!-- 물음표 (정체 궁금증) -->
+        <text x="50" y="80" text-anchor="middle" font-size="26" font-family="serif"
+              fill="rgba(255,183,3,0.85)" font-weight="700">?</text>
+      </svg>
+    </div>
+
+    <div class="dialogue-box">
+      <div class="dialogue-speaker">◆</div>
+      <div class="dialogue-text" id="introDialogueText"></div>
+      <div class="dialogue-cursor" id="dialogueCursor">|</div>
+      <div class="dialogue-footer">
+        <div class="dialogue-dots" id="dialogueDots">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <button class="intro-btn small" id="introNextBtn" style="display:none;">다음 ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="credit">created by. 민프피</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
